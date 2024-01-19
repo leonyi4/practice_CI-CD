@@ -17,14 +17,9 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v2
-      with: 
-        path: 'practice'
-        repo: ${{ github.repository }}
-        ref: ${{ github.ref }}
       
     - name: install requirements
       run: |
-        cd practice
         sudo pip3 install -r requirements.txt
     - name: upgrade numpy
       run: |
@@ -32,3 +27,4 @@ jobs:
     - name: Run Pytest
       run: |
         pytest -v tests
+
