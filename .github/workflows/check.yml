@@ -18,11 +18,11 @@ jobs:
       
     - name: install requirements
       run: |
+        cd practice
         sudo pip3 install -r requirements.txt
     - name: upgrade numpy
       run: |
         sudo pip3 install --upgrade numpy
     - name: Run Pytest
       run: |
-        cd practice
         pytest -v tests
