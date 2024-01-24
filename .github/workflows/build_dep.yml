@@ -19,7 +19,7 @@ jobs:
         id: load-req
         uses: actions/cache@v4
         with:
-          path: abc/def
+          path: ~/.cache/req
           key: req
       -  if: ${{ steps.load-req.outputs.cache-hit != 'true'}} 
          name: install requirements
@@ -32,7 +32,7 @@ jobs:
          id: cache-req
          uses: actions/cache/save@v3
          with:
-            path: abc/def
+            path: ~/.cache/req
             key: req
       - if: ${{ steps.load-req.outputs.cache-hit == 'true'}}
         name: success_caching
