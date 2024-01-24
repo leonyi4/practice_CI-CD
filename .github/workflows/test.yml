@@ -11,20 +11,26 @@ on:
       - dev
 
 jobs:
+  build_dep:
+    uses: ./.github/workflows/build_dep.yml
   test_pushing:
+    needs: [build_dep]
     runs-on: ubuntu-20.04
-
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v2
+      #--- load requirements cache ---
+      - name: load req
+        id: req-load
+        uses: actions/cache@v4
+        with: 
+          path: ~/.cache/req
+          key: req
+        
+      #--- pull git repo---
+      - name: Checkout repo
+        uses: actions/checkout@v2
       
-    - name: install requirements
-      run: |
-        sudo pip3 install -r requirements.txt
-    - name: upgrade numpy
-      run: |
-        sudo pip3 install --upgrade numpy
-    - name: Run Pytest
-      run: |
-        pytest -v tests
+      #---- run tests ---
+      - name: Run Pytest
+        run: |
+          python3 -m pytest -v tests
 
