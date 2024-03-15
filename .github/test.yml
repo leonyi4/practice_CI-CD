@@ -4,8 +4,6 @@ on:
     branches:
       - master
       - dev
-    #paths:
-      #- '**.txt'
   workflow_dispatch:
     inputs:
       manual_run:
