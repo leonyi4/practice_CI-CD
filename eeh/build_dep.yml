@@ -1,0 +1,56 @@
+name: Caching Dependencies
+
+defaults:
+    run:
+      shell: bash -ieo pipefail {0}
+
+on: 
+  workflow_call:
+    inputs:
+      py:
+        description: build ros
+        type: boolean
+        default: true
+        required: false
+
+   
+jobs:
+  build_and_cache_py:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: load requirements
+        id: load-req
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: cac
+
+      -  if: ${{ steps.load-req.outputs.cache-hit != 'true'}} 
+         name: install requirements
+         run: |
+           python3 -m pip install --upgrade pip  
+           pip3 install -r requirements.txt
+           pip3 install --upgrade numpy
+           pip3 freeze
+
+
+      -  if: ${{steps.load-req.outputs.cache-hit != 'true'}}
+         name: cache requirements
+         id: cache-req
+         uses: actions/cache/save@v3
+         with:
+            path: ~/.cache/pip
+            key: cac
+
+      - if: ${{ steps.load-req.outputs.cache-hit == 'true'}}
+        name: success_caching
+        id: success-caching
+        run: |
+          echo "Caching Successful"
+          pip3 freeze
+
+
+
+ 
