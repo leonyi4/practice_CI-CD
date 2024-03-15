@@ -1,6 +1,9 @@
 name: Context testing
 on: 
   push:
+    branches:
+      - master
+      - dev
     paths:
       - 'requirements.txt'
   workflow_dispatch:
