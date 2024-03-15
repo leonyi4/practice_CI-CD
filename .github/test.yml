@@ -9,7 +9,7 @@ on:
         description: 'Run the workflow manually'
         required: false
         default: false
-        type: boolean
+        type: boolean 
 
 jobs:
   dump_contexts_to_log:
