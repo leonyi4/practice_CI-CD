@@ -1,5 +1,9 @@
 name: Python CI
 
+defaults:
+  run:
+    shell: bash -ieo pipefail {0}
+
 on: 
   push:
     branches: 
@@ -13,26 +17,32 @@ on:
 jobs:
   build_dep:
     uses: ./.github/workflows/build_dep.yml
+
   test_pushing:
     needs: [build_dep]
     runs-on: ubuntu-20.04
     steps:
-      #--- load requirements cache ---
-      - name: load req
-        id: req-load
-        uses: actions/cache@v2
-        with: 
-          path: ~/.cache/pip
-          key: req
+      - name: check dep
+        run: |
+          pip3 freeze
+      
         
       #--- pull git repo---
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      #--- load requirements cache ---
+      - name: load requ
+        id: req-load
+        uses: actions/cache/restore@v3
+        with: 
+          path: ~/.cache/pip
+          key: cac
       
       #---- run tests ---
       - name: Run Pytest
         run: |
-          pytest --version
-          pytest -v tests
+          pip3 freeze
+          python3 -m pytest -v tests
           
 
