@@ -13,7 +13,7 @@ on:
 
 jobs:
   dump_contexts_to_log:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #comment
     steps:
       - name: Dump GitHub context
         env:
