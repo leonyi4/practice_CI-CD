@@ -1,0 +1,15 @@
+{
+  "name":"test",
+  "image": "mcr.microsoft.com/vscode/devcontainers/python:3.8",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "vscode":{
+    "extensions":[
+      "ms-python.python",
+      "ms-python.vscode-pylance"
+    ]
+  },
+  "forwardPorts":[5000]
+}
